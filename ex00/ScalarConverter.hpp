@@ -9,7 +9,7 @@ class ScalarConverter
 	ScalarConverter();
 
 	public:
-	static void convert(const std::string& ref);
+	static void convert(const std::string& literal);
 };
 
 #endif // !SCALARCONVERT_HPP_
