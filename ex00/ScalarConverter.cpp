@@ -32,17 +32,26 @@ void	outputValue(const std::string& charDisplay, const std::string& intDisplay,
 
 void	outputNegativeInf(const std::string& literal)
 {
+	(void)literal;
 	outputValue("impossbile", "impossbile", "-inff", "-inf");
 }
 
 void	outputPositiveInf(const std::string& literal)
 {
+	(void)literal;
 	outputValue("impossbile", "impossbile", "+inff", "+inf");
 }
 
 void	outputNan(const std::string& literal)
 {
+	(void)literal;
 	outputValue("impossbile", "impossbile", "nanf", "nan");
+}
+
+void	outputImpossible(const std::string& literal)
+{
+	(void)literal;
+	outputValue("impossbile", "impossbile", "impossbile", "impossbile");
 }
 
 convertFunc	getConvertFunc(const std::string& literal)
@@ -62,13 +71,21 @@ convertFunc	getConvertFunc(const std::string& literal)
 
 	//if is numeric
 	if (isNumeric(literal) == true)
-
+	{
+		if (isFloat(literal) == true)
+			return &convertFloat;
+		if (isDouble(literal) == true)
+			return &convertDouble;
+	}
+	if (isChar(literal) == true)
+		return &convertChar;
+	return &ouputImpossible;
 }
 
 void	ScalarConverter::convert(const std::string &literal)
 {
-	convertFunc convertFunction = getConvertFunc(literal);
 	try {
+		convertFunc convertFunction = getConvertFunc(literal);
 		convertFunction(literal);
 	} catch (std::exception& e) {
 		std::cout<< "Error: " << e.what() <<"\n";
