@@ -54,20 +54,22 @@ void	outputImpossible(const std::string& literal)
 	outputValue("impossbile", "impossbile", "impossbile", "impossbile");
 }
 
-convertFunc	getConvertFunc(const std::string& literal)
+convertFunc	getOutputFunc(const std::string& literal)
 {
 	//for special scientific literals
 	std::string	specialFloatLiterals[4] = {"-inff", "inff", "+inff","nanf"};
 	std::string	specialDoubleLiterals[4] = {"-inf", "inf", "+inf","nan"};
-	convertFunc	SpecialLiterals[4] = {&outputNegativeInf, &outputPositiveInf, &outputPositiveInf, &outputNan};
+	convertFunc	specialLiterals[4] = {&outputNegativeInf, &outputPositiveInf, &outputPositiveInf, &outputNan};
 
 	//if is special literals
 	for (int i = 0; i < 4; i++)
 	{
 		if (literal == specialFloatLiterals[i]
 			|| literal == specialDoubleLiterals[i])
-			return SpecialLiterals[i];
+			return specialLiterals[i];
 	}
+
+	literalType = getLiteralType(literal);
 
 	//if is numeric
 	if (isNumeric(literal) == true)

@@ -4,23 +4,31 @@
 
 double value;
 
-double	parseInput(const std::string& literal)
+Type	literalType;
+
+double	specialDoubles[4] = {-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(),
+	std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()};
+
+Type	parseInput(const std::string& literal)
 {
-	std::string	specialFloatLiterals[4] = {"-inff", "inff", "+inff","nanf"};
-	std::string	specialDoubleLiterals[4] = {"-inf", "inf", "+inf","nan"};
-	double	SpecialDoubles[4] = {-std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()};
+	std::string	specialLiterals[8] = {"-inff", "inff", "+inff","nanf",
+		"-inf", "inf", "+inf","nan"};
+	Type type[8] = {FLOAT_TYPE, FLOAT_TYPE, FLOAT_TYPE, FLOAT_TYPE,
+		DOUBLE_TYPE, DOUBLE_TYPE, DOUBLE_TYPE, DOUBLE_TYPE};
 
 	//if is special literals
 	for (int i = 0; i < 4; i++)
 	{
-		if (literal == specialFloatLiterals[i]
-			|| literal == specialDoubleLiterals[i])
-			return SpecialDoubles[i];
+		if (literal == specialLiterals[i])
+		{
+			value = specialDoubles[i % 4];
+			return type[i];
+		}
 	}
 
 	char *endptr;
 	errno = 0;
-	double result = std::strtod(literal.c_str(), &endptr);
+	u_value.dVal = std::strtod(literal.c_str(), &endptr);
 	if (*endptr == 'f')
 		endptr++;
 	while (std::isspace(*endptr) == true)
@@ -34,6 +42,7 @@ double	parseInput(const std::string& literal)
 
 void ScalarConverter::convert(const std::string& literal)
 {
+	literalType = getType(literal);
 	value = parseInput(literal);
 
 }

@@ -3,6 +3,16 @@
 
 #include <string>
 
+
+enum Type
+{
+	CHAR_TYPE,
+	INT_TYPE,
+	FLOAT_TYPE,
+	DOUBLE_TYPE,
+	IMPOSSIBLE
+};
+
 class ScalarConverter
 {
 	private:
