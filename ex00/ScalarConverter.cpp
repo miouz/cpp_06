@@ -1,95 +1,35 @@
 #include "ScalarConverter.hpp"
-#include <iostream>
-#include <exception>
+#include <limits>
 
-enum literalType
+//check error in literal's own type
+void convertToType(const Type &type, const double &value) throw(std::invalid_argument)
 {
-	CHAR,
-	INT,
-	FLOAT,
-	DOUBLE
-};
-
-union value
-{
-	char	c;
-	int		intVal;
-	float	fVal;
-	double	dVal;
-};
-
-typedef void (*convertFunc)(const std::string& literal);
-
-
-void	outputValue(const std::string& charDisplay, const std::string& intDisplay,
-				 const std::string& floatDisplay, const std::string& doubleDisplay)
-{
-	std::cout << "char: " << charDisplay << "\n"
-		<< "int: " << intDisplay << "\n"
-		<< "float: " << floatDisplay << "\n"
-		<< "double: " << doubleDisplay << "\n";
-}
-
-void	outputNegativeInf(const std::string& literal)
-{
-	(void)literal;
-	outputValue("impossbile", "impossbile", "-inff", "-inf");
-}
-
-void	outputPositiveInf(const std::string& literal)
-{
-	(void)literal;
-	outputValue("impossbile", "impossbile", "+inff", "+inf");
-}
-
-void	outputNan(const std::string& literal)
-{
-	(void)literal;
-	outputValue("impossbile", "impossbile", "nanf", "nan");
-}
-
-void	outputImpossible(const std::string& literal)
-{
-	(void)literal;
-	outputValue("impossbile", "impossbile", "impossbile", "impossbile");
-}
-
-convertFunc	getOutputFunc(const std::string& literal)
-{
-	//for special scientific literals
-	std::string	specialFloatLiterals[4] = {"-inff", "inff", "+inff","nanf"};
-	std::string	specialDoubleLiterals[4] = {"-inf", "inf", "+inf","nan"};
-	convertFunc	specialLiterals[4] = {&outputNegativeInf, &outputPositiveInf, &outputPositiveInf, &outputNan};
-
-	//if is special literals
-	for (int i = 0; i < 4; i++)
-	{
-		if (literal == specialFloatLiterals[i]
-			|| literal == specialDoubleLiterals[i])
-			return specialLiterals[i];
+	switch (type) {
+		case INT_TYPE:
+			if (value < std::INT_MIN || value > std::INT_MAX)
+				throw std::invalid_argument("Overflow or underflow occurred");
+			break;
+		case FLOAT_TYPE:
+			if (value < std::FLOAT_MIN| value > std::FLOAT_MAX)
+				throw std::invalid_argument("Overflow or underflow occurred");
+			break;	
+		default:
+			break;
 	}
-
-	literalType = getLiteralType(literal);
-
-	//if is numeric
-	if (isNumeric(literal) == true)
-	{
-		if (isFloat(literal) == true)
-			return &convertFloat;
-		if (isDouble(literal) == true)
-			return &convertDouble;
-	}
-	if (isChar(literal) == true)
-		return &convertChar;
-	return &ouputImpossible;
 }
 
-void	ScalarConverter::convert(const std::string &literal)
+void ScalarConverter::convert(const std::string& literal)
 {
-	try {
-		convertFunc convertFunction = getConvertFunc(literal);
-		convertFunction(literal);
-	} catch (std::exception& e) {
-		std::cout<< "Error: " << e.what() <<"\n";
+	double	value;
+	Type	literalType;
+
+	try{
+	literalType = getType(literal);
+	value = getValue(literal, literalType);
+	convertToType(literalType, value);
+	displayInAllTypes(literalType, value);
+	}catch(...)
+	{
+		displayImpossible();
 	}
 }
