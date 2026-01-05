@@ -4,7 +4,7 @@ static bool	isSpecialLiteral(const std::string& literal)
 {
 	std::string	specialLiterals[8] = {"-inff", "inff", "+inff","nanf",
 		"-inf", "inf", "+inf","nan"};
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		if (literal == specialLiterals[i])
 			return true;

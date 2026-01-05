@@ -11,7 +11,6 @@ enum Type
 	FLOAT_TYPE,
 	DOUBLE_TYPE,
 	SPECIAL_TYPE,
-	IMPOSSIBLE
 };
 
 class ScalarConverter
@@ -25,5 +24,6 @@ class ScalarConverter
 
 Type	getType(const std::string& literal);
 double	getValue(const std::string& literal, const Type& type) throw(std::invalid_argument);
-void	displayInAllTypes(const Type& type, const double& value);
+void	displayInAllTypes(const Type& type, const double& value, int& precision);
+void	displayImpossible();
 #endif // !SCALARCONVERT_HPP_
