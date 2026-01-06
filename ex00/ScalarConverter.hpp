@@ -1,7 +1,13 @@
 #ifndef SCALARCONVERT_HPP_
 #define SCALARCONVERT_HPP_
 
+#include <exception>
 #include <string>
+#include <stdexcept>
+#include <limits>
+#include <iostream>
+#include <cmath>
+#include <cerrno>
 
 
 enum Type
@@ -23,7 +29,7 @@ class ScalarConverter
 };
 
 Type	getType(const std::string& literal);
-double	getValue(const std::string& literal, const Type& type) throw(std::invalid_argument);
+double	getValue(const std::string& literal, const Type& type);
 void	displayInAllTypes(const Type& type, const double& value, int& precision);
 void	displayImpossible();
 #endif // !SCALARCONVERT_HPP_

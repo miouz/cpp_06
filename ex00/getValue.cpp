@@ -1,5 +1,4 @@
 #include "ScalarConverter.hpp"
-#include <limits>
 
 static double	getSpecialValue(const std::string& literal)
 {
@@ -17,7 +16,7 @@ static double	getSpecialValue(const std::string& literal)
 	return specialDoubles[i % 4];
 }
 
-double	getValue(const std::string& literal, const Type& type) throw(std::invalid_argument)
+double	getValue(const std::string& literal, const Type& type)
 {
 	if (type == SPECIAL_TYPE)
 		return getSpecialValue(literal);
@@ -25,7 +24,7 @@ double	getValue(const std::string& literal, const Type& type) throw(std::invalid
 		return literal[0];
 	char *endptr;
 	errno = 0;
-	double	result = std::strtod(literal.c_str(), &endptr);
+	double	result = strtod(literal.c_str(), &endptr);
 	if (*endptr == 'f')
 		endptr++;
 	if (*endptr != '\0' || endptr == literal.c_str()
