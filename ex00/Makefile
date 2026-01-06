@@ -29,6 +29,8 @@ SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
 #Convert source files to object files
 OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
+TEST_SCRIPT := test.sh
+
 # ============================================================================ #
 #                                   COLORS                                     #
 # ============================================================================ #
@@ -62,8 +64,18 @@ $(NAME): $(OBJS)
 #Compile source files to object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
-	@printf '$(YELLOW)Woah Compiling $<... (ﾉ◕ヮ◕)ﾉ\n$(RESET)'
+	@printf "$(YELLOW)Woah Compiling $<... (ﾉ◕ヮ◕)ﾉ\n$(RESET)"
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
+
+#Test suit
+test: $(NAME)
+	@if [! -f $(TEST_SCRIPT)]; then \
+		printf "$(RED)$(TEST_SCRIPT) not Found\n"; \
+		exit 1; \
+	fi
+	@chmod +x TEST_SCRIPT
+	@printf "$(BLUE)Running Tests$(RESET)"
+	@./$(TEST_SCRIPT)
 
 # ============================================================================ #
 #                                 🍻CLEANNING                                    #
