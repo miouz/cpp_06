@@ -69,12 +69,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 #Test suit
 test: $(NAME)
-	@if [! -f $(TEST_SCRIPT)]; then \
+	@if [ ! -f $(TEST_SCRIPT) ]; then \
 		printf "$(RED)$(TEST_SCRIPT) not Found\n"; \
 		exit 1; \
 	fi
 	@chmod +x $(TEST_SCRIPT)
-	@printf "$(BLUE)Running Tests\n$(RESET)"
+	@printf "$(BLUE)Running Tests Files\n$(RESET)"
 	@./$(TEST_SCRIPT)
 
 # ============================================================================ #
