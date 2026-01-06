@@ -51,7 +51,7 @@ static void displayInFloat(const Type& type, const double& value, int& precision
 		if (fVal == std::floor(fVal))
 			output << fVal << ".0";
 		else
-			output << std::setprecision(precision) << fVal;
+			output << std::fixed << std::setprecision(precision) << fVal;
 		output << "f";
 	}
 	std::cout << output.str() << std::endl;
@@ -66,7 +66,7 @@ void displayInDouble(const Type& type, const double& value, int& precision)
 	if (type != SPECIAL_TYPE && value == std::floor(value))
 		output << value << ".0";
 	else
-		output<< std::setprecision(precision)<< value;
+		output<< std::fixed << std::setprecision(precision)<< value;
 	std::cout << output.str() << std::endl;
 }
 
@@ -86,7 +86,6 @@ void displayImpossible()
  */
 void	displayInAllTypes(const Type& type, const double& value, int& precision)
 {
-	std::cout << "precision is "<< precision <<"\n";
 	displayInChar(type, value);
 	displayInInt(type, value);
 	displayInFloat(type, value, precision);
