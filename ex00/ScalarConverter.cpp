@@ -27,6 +27,7 @@ void ScalarConverter::convert(const std::string& literal)
 	if (literalType == FLOAT_TYPE || literalType == DOUBLE_TYPE)
 		precision = getPrecision(literal);
 	value= getValue(literal, literalType);
+	convertToType(literalType, value);
 	displayInAllTypes(literalType, value, precision);
 	}catch(...)
 	{
