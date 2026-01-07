@@ -30,6 +30,6 @@ class ScalarConverter
 
 Type	getType(const std::string& literal);
 double	getValue(const std::string& literal, const Type& type);
-void	displayInAllTypes(const Type& type, const double& value, int& precision);
+void	displayInAllTypes(const Type& type, const double& value);
 void	displayImpossible();
 #endif // !SCALARCONVERT_HPP_

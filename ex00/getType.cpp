@@ -18,10 +18,10 @@ Type	getType(const std::string& literal)
 		return SPECIAL_TYPE;
 	if (literal.size() == 1 && !std::isdigit(literal[0]))
 		return CHAR_TYPE;
-	if (literal.find('.') != std::string::npos
-		&& literal.find('f') == literal.size() - 1)
+	if (literal.find('f') != std::string::npos)
 		return FLOAT_TYPE;
-	if (literal.find('.') != std::string::npos)
+	if (literal.find('.') != std::string::npos
+		|| literal.find('e') != std::string::npos)
 		return DOUBLE_TYPE;
 	return INT_TYPE;
 }

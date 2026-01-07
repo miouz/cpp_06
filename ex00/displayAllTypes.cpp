@@ -12,12 +12,12 @@ static void displayInChar(const Type& type, const double& value)
 		output << "impossible";
 	else if (value < 0 || value > 127)
 		output << "impossible";
-	else if ((value >= 0 && value < 32)
-			||(value > 126 && value <= 127))
+	else if ((value >= 0 && value <= 127)
+			&& !isprint(value))
 		output << "Non displayable";
 	else
 		output << static_cast<char>(value);
-	std::cout << output.str() << std::endl;
+	std::cout << output.str() << "\n";
 }
 
 static void displayInInt(const Type& type, const double& value)
@@ -32,13 +32,12 @@ static void displayInInt(const Type& type, const double& value)
 		output << "impossible";
 	else
 		output << static_cast<int>(value);
-	std::cout << output.str() << std::endl;
+	std::cout << output.str() << "\n";
 }
 
-static void displayInFloat(const Type& type, const double& value, int& precision)
+static void displayInFloat(const Type& type, const double& value)
 {
 	std::stringstream	output;
-	(void)precision;
 
 	output<<"float: ";
 	if (type == SPECIAL_TYPE)
@@ -49,29 +48,26 @@ static void displayInFloat(const Type& type, const double& value, int& precision
 	else
 	{
 		float fVal = static_cast<float>(value);
-		if (fVal == std::floor(fVal))
-			output << fVal << ".0";
-		else
-			// output << std::fixed << std::setprecision(precision) << fVal;
-			output << fVal;
+		output << fVal;
+		if (output.str().find('.') == std::string::npos
+			&& output.str().find('e') == std::string::npos)
+			output << ".0";
 		output << "f";
 	}
-	std::cout << output.str() << std::endl;
+	std::cout << output.str() << "\n";
 }
 
 
-void displayInDouble(const Type& type, const double& value, int& precision)
+void displayInDouble(const Type& type, const double& value)
 {
 	std::stringstream output;
-	(void)precision;
 
-	output <<"double: ";
-	if (type != SPECIAL_TYPE && value == std::floor(value))
-		output << value << ".0";
-	else
-		// output<< std::fixed << std::setprecision(precision)<< value;
-		output<< value;
-	std::cout << output.str() << std::endl;
+	output <<"double: " << value;
+	if (type != SPECIAL_TYPE
+	 	&& output.str().find('.' ) == std::string::npos
+		&& output.str().find('e', 6) == std::string::npos)
+		output << ".0";
+	std::cout << output.str() << "\n";
 }
 
 void displayImpossible()
@@ -88,10 +84,10 @@ void displayImpossible()
  * @param type the literal's OWN TYPE
  * @param value the value in double VALIDED in literal's OWN TYPE	
  */
-void	displayInAllTypes(const Type& type, const double& value, int& precision)
+void	displayInAllTypes(const Type& type, const double& value)
 {
 	displayInChar(type, value);
 	displayInInt(type, value);
-	displayInFloat(type, value, precision);
-	displayInDouble(type, value, precision);
+	displayInFloat(type, value);
+	displayInDouble(type, value);
 }
