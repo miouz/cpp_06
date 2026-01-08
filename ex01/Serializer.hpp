@@ -1,7 +1,7 @@
 #ifndef SERIALIZER_HPP_
 #define SERIALIZER_HPP_
 
-#include <cstdint>
+#include <stdint.h>
 struct Data
 {
 	int iVal;
