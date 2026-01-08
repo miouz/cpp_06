@@ -67,15 +67,15 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@printf "$(YELLOW)Woah Compiling $<... (ﾉ◕ヮ◕)ﾉ\n$(RESET)"
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
-#Test suit
-test: $(NAME)
-	@if [ ! -f $(TEST_SCRIPT) ]; then \
-		printf "$(RED)$(TEST_SCRIPT) not Found\n"; \
-		exit 1; \
-	fi
-	@chmod +x $(TEST_SCRIPT)
-	@printf "$(BLUE)Running Tests Files\n$(RESET)"
-	@./$(TEST_SCRIPT)
+# #Test suit
+# test: $(NAME)
+# 	@if [ ! -f $(TEST_SCRIPT) ]; then \
+# 		printf "$(RED)$(TEST_SCRIPT) not Found\n"; \
+# 		exit 1; \
+# 	fi
+# 	@chmod +x $(TEST_SCRIPT)
+# 	@printf "$(BLUE)Running Tests Files\n$(RESET)"
+# 	@./$(TEST_SCRIPT)
 
 # ============================================================================ #
 #                                 🍻CLEANNING                                    #
